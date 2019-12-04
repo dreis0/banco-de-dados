@@ -28,7 +28,7 @@ create table RestauranteHorario (
 --Dia 
 create table Dia (
 	Id 		int generated always as identity primary key
-	,Dia 	varchar(50)
+	,Descricao 	varchar(50) not null
 );
 
 --Cidade
@@ -120,9 +120,9 @@ create table FotoProduto (
  
  
 -- Status 
- create table Status (
+ create table StatusPedido (
  	Id int primary key generated always as identity
-	 ,Status varchar(100)
+	 ,Status varchar(100) not null
  );
  
  
