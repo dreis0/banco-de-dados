@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Domain.DBHelper;
+using System;
 
 namespace Domain
 {
+    [TableName("Pedido")]
     public class Pedido
     {
         public int Id { get; set; }

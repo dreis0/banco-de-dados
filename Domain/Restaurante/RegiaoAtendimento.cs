@@ -1,5 +1,8 @@
-﻿namespace Domain
+﻿using Domain.DBHelper;
+
+namespace Domain
 {
+    [TableName("RegiaoAtendimento")]
     public class RegiaoAtendimento
     {
         public string CnpjRestaurante { get; set; }

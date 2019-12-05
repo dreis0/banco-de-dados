@@ -1,5 +1,8 @@
-﻿namespace Domain
+﻿using Domain.DBHelper;
+
+namespace Domain
 {
+    [TableName("Entregador")]
     public class Entregador
     {
         public string Cpf { get; set; }

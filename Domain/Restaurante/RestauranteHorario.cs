@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Domain.DBHelper;
+using System;
 
 namespace Domain
 {
+    [TableName("RestauranteHorario")]
     public class RestauranteHorario
     {
         public string CnpjRestaurante { get; set; }
