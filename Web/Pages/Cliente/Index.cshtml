@@ -1,4 +1,32 @@
 ﻿@page
 @model Web.Pages.Cliente.IndexModel
 @{
+    ViewData["Title"] = "Cliente";
 }
+
+<div class="container">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-sm-8 col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Faça seu pedido</h5>
+                    <form method="post">
+                        <div class="form-group">
+                            <label asp-for="Cliente.Cpf">Insira seu CPF</label>
+                            <input class="form-control mb-2"
+                                   asp-for="Cliente.Cpf"
+                                   placeholder="00000000000" 
+                                   maxlength="11"
+                            />
+                        </div>
+                        <span class="text-danger">@Html.ValidationMessage("validation")</span>
+                        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                        <a href="/Cliente/Cadastro" class="btn btn-secondary btn-block">Cadastrar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>

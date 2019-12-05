@@ -28,7 +28,8 @@ namespace banco_de_dados
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            services.AddHttpContextAccessor();
+            services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             string con = Configuration.GetValue<string>("Connection");
@@ -59,7 +60,7 @@ namespace banco_de_dados
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseSession();
             app.UseMvc();
         }
     }

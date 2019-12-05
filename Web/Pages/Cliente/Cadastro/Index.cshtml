@@ -1,0 +1,46 @@
+﻿@page
+@model Web.Pages.Cliente.Cadastro.IndexModel
+@{
+}
+<h4>Cadastro</h4>
+
+<form method="post">
+    <div class="row">
+        <div class="col-sm-12 col-12" style="padding-top: 15px;">
+            <span class="text-danger">@Html.ValidationMessage("ValidationMessage")</span>
+            <p>
+                * Campos obrigatórios.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Cadastro.Cpf"></label>
+            <input asp-for="Cadastro.Cpf" class="form-control" data-mask="00000000000" />
+            <span asp-validation-for="Cadastro.Cpf" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Cadastro.RG"></label>
+            <input asp-for="Cadastro.RG" class="form-control" data-mask="00000000000" />
+            <span asp-validation-for="Cadastro.RG" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Cadastro.Nome"></label>
+            <input asp-for="Cadastro.Nome" class="form-control" maxlength="255" />
+            <span asp-validation-for="Cadastro.Nome" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Cadastro.Sobrenome"></label>
+            <input asp-for="Cadastro.Sobrenome" class="form-control" maxlength="255" />
+        </div>
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Cadastro.Telefone"></label>
+            <input asp-for="Cadastro.Telefone" class="form-control" maxlength="255" />
+        </div>
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Cadastro.Email"></label>
+            <input asp-for="Cadastro.Email" class="form-control" maxlength="255" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Cadastrar-se</button>
+</form>
