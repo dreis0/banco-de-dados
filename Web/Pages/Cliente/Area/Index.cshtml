@@ -4,3 +4,46 @@
     ViewData["Title"] = "Área do Cliente";
 }
 
+<style>
+    a:hover {
+        text-decoration: none;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3" style="font-size: 2rem">
+            <h4 class="display-4">Menu</h4>
+            <br />
+            <div class="row"><a href="/Cliente/Pedidos">Pedidos</a></div>
+            <br />
+            <div class="row"><a href="/Cliente/Enderecos">Endereços</a></div>
+            <br />
+            <div class="row"><a href="/Cliente/Cartoes">Cartões</a></div>
+            <br />
+            <div class="row"><a href="/Cliente/Avaliacoes">Avaliações</a></div>
+        </div>
+        <div class="col-8">
+            <h4 class="display-4">Restaurantes</h4>
+            <div class="list-group mt-4">
+                @if (Model.Restaurantes != null)
+                {
+                    @foreach (var rest in Model.Restaurantes)
+                    {
+                        <a href="/Restaurante/@rest.Cnpj" class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5>@rest.NomeFantasia</h5>
+                            </div>
+                            <div>
+                                @foreach (var c in rest.Categorias)
+                                {
+                                    <span class="badge badge-primary">@c.Nome</span>
+                                }
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
