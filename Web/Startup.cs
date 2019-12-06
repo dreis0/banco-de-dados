@@ -24,13 +24,15 @@ namespace banco_de_dados
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddHttpContextAccessor();
-            services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSession(opt =>
+            {
+                opt.Cookie.IsEssential = true;
+            });
 
             string con = Configuration.GetValue<string>("Connection");
             services.AddScoped<IDbConnection>(factory => new NpgsqlConnection(con));
