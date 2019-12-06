@@ -1,0 +1,44 @@
+﻿@page "{cnpjRestaurante:long}";
+@model Web.Pages.Restaurante.IndexModel
+@{
+    ViewData["Title"] = Model.Restaurante.NomeFantasia;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <h4 class="display-4">@Model.Restaurante.NomeFantasia</h4>
+            <div class="list-group mt-4">
+                @if (Model.Restaurante.Produtos != null)
+                {
+                    @foreach (var p in Model.Restaurante.Produtos)
+                    {
+                        <div class="list-group-item list-group-item-action">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4>@p.Nome</h4>
+                                <h5>R$@p.Preco</h5>
+                            </div>
+                            <div>
+                                <h6>@p.Descricao</h6>
+                            </div>
+                            <div>
+                                @foreach (var c in p.Categorias)
+                                {
+                                    <span class="badge badge-primary">@c.Nome</span>
+                                }
+                            </div>
+                            <div class="text-right">
+                                <form method="post">
+                                    <button asp-page-handler="AdicionarProduto" asp-route-produtoId="@p.Id" class="btn btn-sm btn-primary">Adicionar</button>
+                                    <button asp-page-handler="RemoverProduto" class="btn btn-sm btn-danger">Remover</button>
+                                </form>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+</div>
