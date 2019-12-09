@@ -3,6 +3,7 @@ create table Restaurante (
 	,NomeOficial 	varchar(100) 	not null
 	,NomeFantasia 	varchar(100) 	not null
 	,Cep 			varchar(8) 		not null
+	,Rua 			varchar(100) 	not null
 	,Complemento 	varchar(200)
 	,Numero 		int 			not null
 	,CidadeId 		int 			not null
@@ -15,21 +16,29 @@ create table TelefonesRestaurante (
 	,foreign key (CNPJRestaurante) references Restaurante(CNPJ) 
 );
 
---RestauranteHorario
-create table RestauranteHorario (
-	CNPJRestaurante char(14) 				not null
-	,DiaId 			int 					not null 
-	,Abertura 		time without time zone 	not null
-	,fechamento 	time without time zone 	not null
-	,Primary key(CNPJRestaurante,DiaId) 
-	,foreign key (CNPJRestaurante) references Restaurante(CNPJ) 
-);
+ALTER DOMAIN public.dia
+    ADD CONSTRAINT dia_check CHECK (VALUE > 0 AND VALUE < 8)
 
---Dia 
-create table Dia (
-	Id 		int generated always as identity primary key
-	,Descricao 	varchar(50) not null
-);
+--RestauranteHorario
+CREATE TABLE restaurante_horarionormal
+(
+    cnpjrestaurante 	character(14) 			NOT NULL,
+    dia 				dia	 					NOT NULL,
+    abertura 			time without time zone 	NOT NULL,
+    fechamento 			time without time zone 	NOT NULL,
+    PRIMARY KEY (cnpjrestaurante, dia),
+    FOREIGN KEY (cnpjrestaurante) references Restaurante(Cnpj)
+)
+
+CREATE TABLE restaurante_horarioespecial
+(
+	cnpjrestaurante 	character(14) 			NOT NULL,
+    diaespecial 		date 					NOT NULL,
+    abertura 			time without time zone 	NOT NULL,
+    fechamento time without time zone	 		NOT NULL,
+    PRIMARY KEY (cnpjrestaurante, diaespecial),
+    FOREIGN KEY (cnpjrestaurante) references Restaurante(cnpj)
+)
 
 --Cidade
 create table Cidade (
@@ -82,7 +91,6 @@ create table Produto (
 	,Descricao 		varchar(100)
 	,Preco 			money 		not null
 	,Disponivel 	boolean 	not null
-	,primary key(CNPJRestaurante,ProdutoId)  
 	,foreign key (CNPJRestaurante) references Restaurante(CNPJ) 
 );
 
@@ -90,6 +98,7 @@ create table Produto (
 create table CategoriasProduto (
 	CategoriaId int not null
 	,ProdutoId 	int not null
+	,primary key (CategoriaId, ProdutoId)
 	,foreign key (CategoriaId) references Categoria(Id)
 );
 
@@ -143,7 +152,7 @@ create table Pedido (
 	,PedidoId int not null
 	,Quantidade int not null
 	,foreign key (ProdutoId)		references Produto(Id)
-	,foreign key ()		references Pedido(Id)
+	,foreign key (PedidoId)		references Pedido(Id)
  );
  
   --Bandeira Cartao
@@ -170,3 +179,24 @@ create table Pedido (
 	 ,foreign key (BandeiraId) 	references  CartaoBandeira (BandeiraId)
 	 ,foreign key (TipoId) 		references  CartaoTipo (TipoId)
  );
+
+create table EnderecoCliente (
+	Id int primary key generated always as identity
+	,CpfCliente 	char(11) 		not null
+	,CidadeId 		int 			not null
+	,Rua 			varchar(100) 	not null
+	,Cep 			char(8) 		not null
+	,Complemento 	varchar(200) 	
+	,Numero 		int 			not null
+	,foreign key (CidadeId) references Cidade(Id)
+);
+
+create table Avaliacao (
+	CpfCliente 			char(11) 		not null
+	,CnpjRestaurante 	char(14) 		not null
+	,Nota 				int 			not null
+	,Comentario			varchar(1000) 	not null
+	,primary key(CpfCliente, CnpjRestaurante)
+	,foreign key (CnpjRestaurante) references Restaurante(Cnpj)
+	,foreign key (CpfCliente) references Cliente(Cpf)
+);
