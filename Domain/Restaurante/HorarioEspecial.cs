@@ -3,12 +3,12 @@ using System;
 
 namespace Domain
 {
-    [TableName("RestauranteHorario")]
-    public class RestauranteHorario
+    [TableName("restaurante_horarioespecial")]
+    public class HorarioEspecial
     {
         public string CnpjRestaurante { get; set; }
 
-        public int DiaId { get; set; }
+        public DateTime DataEspecial { get; set; }
 
         public TimeSpan Abertura { get; set; }
 
