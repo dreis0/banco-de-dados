@@ -45,6 +45,7 @@ create table Cidade (
 	Id 			int 			primary key generated always as identity
 	,Nome 		varchar(100) 	not null
 	,EstadoId 	int 			not null
+	,foreign key (EstadoId) references Estado (Id)
 );
 
 --Estado
@@ -52,6 +53,7 @@ create table Estado (
 	Id 		int 			primary key generated always as identity
 	,Nome 	varchar(100) 	not null
 	,PaisId int 			not null
+	,foreign key(PaisId) references Pais(Id)
 );
 
 --Pais
@@ -151,7 +153,7 @@ create table Pedido (
 	ProdutoId int not null
 	,PedidoId int not null
 	,Quantidade int not null
-	,foreign key (ProdutoId)		references Produto(Id)
+	,foreign key (ProdutoId)	references Produto(Id)
 	,foreign key (PedidoId)		references Pedido(Id)
  );
  
