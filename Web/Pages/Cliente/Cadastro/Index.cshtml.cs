@@ -14,12 +14,14 @@ namespace Web.Pages.Cliente.Cadastro
             Cadastro = new Cadastrar.Command();
         }
 
-        public void OnPost([FromServices]Cadastrar.CommandHandler handler)
+        public IActionResult OnPost([FromServices]Cadastrar.CommandHandler handler)
         {
             if (ModelState.IsValid)
             {
                 handler.Handle(Cadastro);
             }
+
+            return Redirect("/Cliente");
         }
     }
 }

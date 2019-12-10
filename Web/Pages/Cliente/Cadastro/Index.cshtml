@@ -16,17 +16,17 @@
     <div class="row">
         <div class="col-sm-6 col-12 form-group">
             <label asp-for="Cadastro.Cpf"></label>
-            <input asp-for="Cadastro.Cpf" class="form-control" data-mask="00000000000" />
+            <input asp-for="Cadastro.Cpf" class="form-control" data-mask="00000000000" placeholder="00000000000"/>
             <span asp-validation-for="Cadastro.Cpf" class="text-danger"></span>
         </div>
         <div class="col-sm-6 col-12 form-group">
             <label asp-for="Cadastro.RG"></label>
-            <input asp-for="Cadastro.RG" class="form-control" data-mask="00000000000" />
+            <input asp-for="Cadastro.RG" class="form-control" data-mask="0000000000" placeholder="000000000"/>
             <span asp-validation-for="Cadastro.RG" class="text-danger"></span>
         </div>
         <div class="col-sm-6 col-12 form-group">
             <label asp-for="Cadastro.Nome"></label>
-            <input asp-for="Cadastro.Nome" class="form-control" maxlength="255" />
+            <input asp-for="Cadastro.Nome" class="form-control" maxlength="50" />
             <span asp-validation-for="Cadastro.Nome" class="text-danger"></span>
         </div>
         <div class="col-sm-6 col-12 form-group">
@@ -35,11 +35,11 @@
         </div>
         <div class="col-sm-6 col-12 form-group">
             <label asp-for="Cadastro.Telefone"></label>
-            <input asp-for="Cadastro.Telefone" class="form-control" maxlength="255" />
+            <input asp-for="Cadastro.Telefone" class="form-control" maxlength="20" />
         </div>
         <div class="col-sm-6 col-12 form-group">
             <label asp-for="Cadastro.Email"></label>
-            <input asp-for="Cadastro.Email" class="form-control" maxlength="255" />
+            <input asp-for="Cadastro.Email" class="form-control" maxlength="100" />
         </div>
     </div>
     <button type="submit" class="btn btn-primary">Cadastrar-se</button>
