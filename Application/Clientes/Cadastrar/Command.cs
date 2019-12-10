@@ -20,6 +20,7 @@ namespace Application.Clientes
             public string Sobrenome { get; set; }
 
             [Display(Name = "Rg")]
+            [MaxLength(10)]
             public string RG { get; set; }
 
             [Display(Name = "*Email")]
