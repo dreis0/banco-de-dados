@@ -3,6 +3,7 @@ using Application.Restaurantes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
 
 namespace Web.Pages.Restaurante
 {
@@ -18,22 +19,34 @@ namespace Web.Pages.Restaurante
             return Page();
         }
 
-        public IActionResult OnPostAdicionarProduto(int produtoId,
-            [FromServices]AdicionarProdutoAoPedidoAberto.CommandHandler handler)
+        public IActionResult OnPostAdicionarProduto(int produtoId
+            , [FromServices]AdicionarProdutoAoPedidoAberto.CommandHandler handler
+            , [FromRoute]string cnpjRestaurante
+            , [FromServices]ObterRestauranteComProdutos.QueryHandler handlerProdutos)
         {
-            if (HttpContext.Session.GetString("CpfCliente") != null)
+            string sessionCpf = HttpContext.Session.GetString("CpfCliente");
+            if (!string.IsNullOrWhiteSpace(sessionCpf))
             {
-                string sessionCpf = HttpContext.Session.GetString("CpfCliente");
                 handler.Handle(produtoId, sessionCpf);
+                return OnGet(cnpjRestaurante, handlerProdutos);
             }
 
-            return Page();
+            return Redirect("/Cliente");
         }
 
-        public IActionResult OnPostRemoverProduto(int produtoId,
-            [FromServices]RemoverProdutoDePedidoAberto.CommandHandler handler)
+        public IActionResult OnPostRemoverProduto(int produtoId
+            , [FromServices]RemoverProdutoDePedidoAberto.CommandHandler handler
+            , [FromRoute]string cnpjRestaurante
+            , [FromServices]ObterRestauranteComProdutos.QueryHandler handlerProdutos)
         {
-            return Page();
+            string sessionCpf = HttpContext.Session.GetString("CpfCliente");
+            if (!string.IsNullOrWhiteSpace(sessionCpf))
+            {
+                handler.Handle(produtoId, sessionCpf);
+                return OnGet(cnpjRestaurante, handlerProdutos);
+            }
+
+            return Redirect("/Cliente");
         }
     }
 }

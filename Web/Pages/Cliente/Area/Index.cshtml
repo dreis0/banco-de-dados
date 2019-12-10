@@ -1,4 +1,5 @@
 ﻿@page
+@using Domain;
 @model Web.Pages.Cliente.Area.IndexModel
 @{
     ViewData["Title"] = "Área do Cliente";
@@ -12,8 +13,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-3" style="font-size: 2rem">
-            <h4 class="display-4">Menu</h4>
+        <div class="col-2" style="font-size: 2rem">
             <br />
             <div class="row"><a href="/Cliente/Pedidos">Pedidos</a></div>
             <br />
@@ -23,7 +23,79 @@
             <br />
             <div class="row"><a href="/Cliente/Avaliacoes">Avaliações</a></div>
         </div>
-        <div class="col-8">
+        <div class="col-10">
+            @if (Model.PedidoNaoEntregue != null && Model.PedidoNaoEntregue.Count() > 0)
+            {
+                <form method="post">
+                    <h4 class="display-4">Pedido a Caminho</h4>
+                    <span>
+                        Seu pedido no(s) restaurante(s):
+                        @foreach (var nome in Model.PedidoNaoEntregue.Select(p => p.NomeFantasia).Distinct())
+                        {
+                            <span>@nome @(Model.PedidoNaoEntregue.Select(p => p.NomeFantasia).Distinct().LastOrDefault() == nome ? "" : ",") </span>
+                        }
+                        está a caminho
+                    </span>
+                    <div class="row" style="margin-top: 1rem">
+                        @for (int i = 0; i < Model.PedidoNaoEntregue.Count(); i++)
+                        {
+                            @Html.HiddenFor(Model => Model.PedidoNaoEntregue.ToArray()[i].PedidoId)
+                            @Html.HiddenFor(Model => Model.PedidoNaoEntregue.ToArray()[i].ProdutoId)
+                            @Html.HiddenFor(Model => Model.PedidoNaoEntregue.ToArray()[i].NomeFantasia)
+                            @Html.HiddenFor(Model => Model.PedidoNaoEntregue.ToArray()[i].NomeEntregador)
+                            @Html.HiddenFor(Model => Model.PedidoNaoEntregue.ToArray()[i].NomeProduto)
+                            @Html.HiddenFor(Model => Model.PedidoNaoEntregue.ToArray()[i].NomeEntregador)
+                            <div class="col-4">
+                                <span class="row col-12"> @Model.PedidoNaoEntregue.ToArray()[i].NomeFantasia </span>
+                                <span class="row col-12"> @Model.PedidoNaoEntregue.ToArray()[i].Quantidade x @Model.PedidoNaoEntregue.ToArray()[i].NomeProduto</span>
+                            </div>
+                        }
+                    </div>
+                    <br />
+                    <div class="row col-12">
+                        Total: R$@Model.ValorPedidoFechado
+                    </div>
+                    <div class="row col-12">
+                        Entrega em: @Model.PedidoNaoEntregue.FirstOrDefault().CidadeEntrega - @Model.PedidoNaoEntregue.FirstOrDefault().RuaEntrega , @Model.PedidoNaoEntregue.FirstOrDefault().NumeroEntrega
+                    </div>
+                    <div class="row">
+                        <div class="col-12" style="margin-top: 1rem">
+                            <button asp-page-handler="PedidoEntregue" class="btn btn-sm btn-primary float-right">Já recebi meu pedido</button>
+                        </div>
+                    </div>
+
+                </form>
+            }
+
+            @if (Model.PedidoAberto != null && Model.PedidoAberto.Count() > 0)
+            {
+                <form method="post">
+                    <h4 class="display-4">Pedido Aberto</h4>
+                    <div class="row">
+                        @for (int i = 0; i < Model.PedidoAberto.Count(); i++) //foreach (var item in Model.Pedidos)
+                        {
+                            <div class="col-4">
+                                @Html.HiddenFor(Model => Model.PedidoAberto.ToArray()[i].ProdutoId)
+                                @Html.HiddenFor(Model => Model.PedidoAberto.ToArray()[i].PedidoId)
+                                @Html.HiddenFor(Model => Model.PedidoAberto.ToArray()[i].StatusId)
+                                <h6> @Model.PedidoAberto.ToArray()[i].NomeProduto - @Model.PedidoAberto.ToArray()[i].NomeFantasia</h6>
+                                <span> @Model.PedidoAberto.ToArray()[i].DescricaoProduto </span>
+                            </div>
+                            <div class="col-2">
+                                <input asp-for="PedidoAberto.ToArray()[i].Quantidade" class="form-control" />
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-12" style="margin-top: 1.5rem">
+                            @if (Model.PedidoAberto.FirstOrDefault().StatusId == (int)eStatusPedido.Pendente)
+                            {
+                                <button asp-page-handler="FecharPedido" class="btn btn-sm btn-primary float-right">Fechar Pedido</button>
+                            }
+                        </div>
+                    </div>
+                </form>
+            }
             <h4 class="display-4">Restaurantes</h4>
             <div class="list-group mt-4">
                 @if (Model.Restaurantes != null)

@@ -1,33 +1,35 @@
 ﻿using Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Application.Pedidos
 {
     public partial class ObterPedidoAberto
     {
-        public class PedidoViewModel
+        public class PedidoViewModel : Restaurante
         {
-            public int Id { get; set; }
+            public int ProdutoId { get; set; }
 
-            public DateTime Data { get; set; }
+            public int PedidoId { get; set; }
 
-            public string CpfCliente { get; set; }
+            public DateTime DataPedido { get; set; }
+
+            public string NomeProduto { get; set; }
+
+            public string DescricaoProduto { get; set; }
+
+            public double PrecoProduto { get; set; }
+
+            public string NomeCidade { get; set; }
+
+            public string NomeEstado { get; set; }
+
+            public string NomePais { get; set; }
+
+            public string NomeCliente { get; set; }
+
+            public int Quantidade { get; set; }
 
             public int StatusId { get; set; }
-
-            public IEnumerable<RestaurantePedidoViewModel> Restaurantes { get; set; }
         }
-
-        public class RestaurantePedidoViewModel
-        {
-            public string CnpjRestaurante { get; set; }
-
-            public string NomeRestaurante { get; set; }
-
-            public IEnumerable<Produto> Produtos { get; set; }
-        }
-
     }
 }

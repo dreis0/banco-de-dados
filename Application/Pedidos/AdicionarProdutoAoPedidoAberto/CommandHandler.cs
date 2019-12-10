@@ -18,7 +18,7 @@ namespace Application.Pedidos
 
             public void Handle(int produtoId, string cpf)
             {
-                if(connection.State == ConnectionState.Closed)
+                if (connection.State == ConnectionState.Closed)
                     connection.Open();
 
                 using (var transaction = connection.BeginTransaction(IsolationLevel.Serializable))
@@ -28,7 +28,7 @@ namespace Application.Pedidos
                                                 $",Data" +
                                                 $",CpfCliente" +
                                                 $",StatusId " +
-                                            $"from ${new Pedido().GetTableName()}" +
+                                            $"from {new Pedido().GetTableName()} " +
                                             $"where CpfCliente = @cpf and StatusId = @status";
 
                     var resultPedido = connection
@@ -48,15 +48,21 @@ namespace Application.Pedidos
                         string sqlEntregador = $"select " +
                                                 $"Cpf " +
                                                 $",Nome " +
-                                                $"Veiculo " +
-                                                $"PlacaDoVeiculo " +
+                                                $",Veiculo " +
+                                                $",PlacaDoVeiculo " +
                                                 $"from {new Entregador().GetTableName()}";
 
                         var entregador = connection.QueryFirstOrDefault<Entregador>(sqlEntregador, transaction: transaction);
 
+                        string sqlEndereco = @"select Id " +
+                                                $"from {new EnderecoCliente().GetTableName()} e " +
+                                                @"where CpfCliente = @cpf and Selecionado";
+
+                        int enderecoId = connection.QuerySingleOrDefault<int>(sqlEndereco, param: new { cpf });
+
                         string sqlInsertPedido = $"insert into {new Pedido().GetTableName()} " +
-                                                    $"(Data, CpfCliente, CpfEntregador, StatusId)" +
-                                                    $"values(@Data, @CpfCliente, @CpfEntregador, @StatusId)";
+                                                    $"(Data, CpfCliente, CpfEntregador, StatusId, EnderecoId)" +
+                                                    $"values(@Data, @CpfCliente, @CpfEntregador, @StatusId, @EnderecoId)";
 
                         connection.Execute(sqlInsertPedido,
                             param: new
@@ -64,7 +70,8 @@ namespace Application.Pedidos
                                 Data = DateTime.Now,
                                 CpfCliente = cpf,
                                 CpfEntregador = entregador.Cpf,
-                                StatusId = (int)eStatusPedido.Pendente
+                                StatusId = (int)eStatusPedido.Pendente,
+                                EnderecoId = enderecoId
                             },
                             transaction: transaction
                         );
