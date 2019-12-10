@@ -15,7 +15,7 @@ namespace Application.Pedidos
                 connection = db;
             }
 
-            public double Handle(int PedidoId)
+            public double Handle(int pedidoId)
             {
                 string sqlPreco = @"select 
 	                                sum(p.Preco * pp.quantidade) as PrecoPedido " +
@@ -24,7 +24,7 @@ namespace Application.Pedidos
                                     $"join {new Produto().GetTableName()} p on p.Id = pp.ProdutoId " +
                                     $"where pe.Id = @PedidoId ";
 
-                return connection.QuerySingleOrDefault<double>(sqlPreco, param: new { PedidoId });
+                return connection.QuerySingleOrDefault<double>(sqlPreco, param: new { PedidoId = pedidoId });
             }
         }
     }

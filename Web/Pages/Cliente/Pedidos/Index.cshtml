@@ -1,0 +1,46 @@
+﻿@page
+@model Web.Pages.Cliente.Pedidos.IndexModel
+@{
+}
+
+<style>
+    .btn-link:hover {
+        text-decoration: none
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h4 class="display-4">Pedidos</h4>
+            <div class="list-group mt-4">
+                @if (Model.Pedidos != null)
+                {
+                    @foreach (var p in Model.Pedidos.Select(p => p.PedidoId).Distinct())
+                    {
+                        <div class="list-group-item list-group-item-action">
+                            <div class="row">
+                                <div class="col-12 justify-content-between">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <span style="font-size: 1.5rem; font-weight: 500">
+                                            Pedido no dia @Model.Pedidos.FirstOrDefault(x => x.PedidoId == p).DataPedido.Date.ToString("dd/MM/yyyy")
+                                        </span>
+                                        <span>Valor: R$@Model.Pedidos.FirstOrDefault(x => x.PedidoId == p).PrecoTotal</span>
+                                    </div>
+                                </div>
+                            </div>
+                            @foreach (var innerPedido in Model.Pedidos.Where(pedido => pedido.PedidoId == p))
+                            {
+                                <div class="row m">
+                                    <div class="col-12">
+                                        <a href="/Restaurante/Avaliar/@innerPedido.CnpjRestaurante" class="btn-link" style="font-size: 1rem; font-weight: 400">@innerPedido.NomeRestaurante</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
