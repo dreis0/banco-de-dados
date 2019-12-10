@@ -144,6 +144,8 @@ create table Pedido (
 	,CpfCliente 	varchar(11) not null
 	,CpfEntregador  varchar(11) not null
 	,StatusId 		int 		not null
+	,EnderecoId 	int			not null
+	,foreign key(EnderecoId) 		references EnderecoCliente(Id)
 	,foreign key (CpfCliente) 		references Cliente(Cpf)
 	,foreign key (CpfEntregador) 	references Entregador(Cpf) 
 	,foreign key (StatusId) 		references Status(id)
