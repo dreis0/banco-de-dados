@@ -20,5 +20,7 @@ namespace Domain
         public int BandeiraId { get; set; }
 
         public int TipoId { get; set; }
+
+        public string Apelido { get; set; }
     }
 }
