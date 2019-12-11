@@ -8,7 +8,11 @@ namespace Application.Pedidos
     {
         public class Command
         {
+            public string Cpf { get; set; }
+
             public int PedidoId { get; set; }
+
+            public bool PagarComCartao { get; set; }
 
             public IEnumerable<ProdutoQuantidade> Produtos { get; set; }
         }

@@ -1,4 +1,5 @@
-﻿using Dapper;
+﻿using Application.Cartoes;
+using Dapper;
 using Domain;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,14 @@ namespace Application.Pedidos
     {
         public class CommandHandler
         {
-            private IDbConnection connection;
+            private readonly IDbConnection connection;
+            private readonly GerarPagamentoCartao.CommandHandler pagamentoHandler;
 
-            public CommandHandler(IDbConnection db)
+            public CommandHandler(IDbConnection db
+                , GerarPagamentoCartao.CommandHandler handler)
             {
                 connection = db;
+                pagamentoHandler = handler;
             }
 
             public void Handle(Command command)
@@ -39,6 +43,9 @@ namespace Application.Pedidos
                         }, transaction: transaction);
 
                     }
+
+                    if (command.PagarComCartao)
+                        pagamentoHandler.Handle(command.Cpf, command.PedidoId, transaction);
 
                     string sqlFecharPedido = $"update {new Pedido().GetTableName()} " +
                                             @"set StatusId = @status
