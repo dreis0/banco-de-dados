@@ -26,10 +26,10 @@ namespace Application.Pedidos
                 using (var transaction = connection.BeginTransaction())
                 {
                     string sqlPedido = $"select " +
-                                        $"Id " +
+                                        $"id " +
                                         $",Data " +
                                         $",CpfCliente " +
-                                        $",StatusId" +
+                                        $",StatusId " +
                                         $"from {new Pedido().GetTableName()} " +
                                         $"where CpfCliente = @Cpf and StatusId = @Status";
 
