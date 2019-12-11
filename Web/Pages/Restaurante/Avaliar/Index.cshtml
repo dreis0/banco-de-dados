@@ -1,0 +1,27 @@
+﻿@page "{cnpjRestaurante:long}";
+@model Web.Pages.Restaurante.Avaliar.IndexModel
+@{
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="d-flex w-100 justify-content-between">
+            <form method="post">
+                @Html.HiddenFor(Model => Model.Avaliacao.CnpjRestaurante)
+                @Html.HiddenFor(Model => Model.Avaliacao.CpfCliente)
+                <div class="col-12 form-group">
+                    <label asp-for="Avaliacao.Nota"></label>
+                    <input asp-for="Avaliacao.Nota" class="form-control" placeholder="Nota" max="10" />
+                    <span asp-validation-for="Avaliacao.Nota" class="text-danger"></span>
+                </div>
+                <div class="col-12 form-group">
+                    <label asp-for="Avaliacao.Comentario"></label>
+                    <input asp-for="Avaliacao.Comentario" class="form-control" placeholder="Comentário" maxlength="1000" />
+                    <span asp-validation-for="Avaliacao.Comentario" class="text-danger"></span>
+                </div>
+                <div class="col-12">
+                    <button asp-page-handler="Avaliar" type="submit" class="btn btn-toolbar btn-primary">Submeter Avaliacao</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
