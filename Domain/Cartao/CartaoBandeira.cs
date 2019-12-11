@@ -5,7 +5,7 @@ namespace Domain
     [TableName("CartaoBandeira")]
     public class CartaoBandeira
     {
-        public int BandeiraId { get; set; }
+        public int Id { get; set; }
 
         public string Bandeira { get; set; }
     }
