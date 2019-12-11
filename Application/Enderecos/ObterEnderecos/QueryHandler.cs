@@ -21,7 +21,8 @@ namespace Application.Enderecos
             public IEnumerable<EnderecoViewModel> Handle(string cpfCliente)
             {
                 string sql = @"select 
-	                            ec.rua
+                                ec.Id as EnderecoId
+	                            ,ec.rua
 	                            ,ec.Cep
 	                            ,ec.Numero
 	                            ,ec.Complemento
@@ -31,7 +32,7 @@ namespace Application.Enderecos
                             $"from {new EnderecoCliente().GetTableName()} ec " +
                             $"join {new Cidade().GetTableName()} cid on cid.Id = ec.CidadeId " +
                             $"join {new Estado().GetTableName()} es on es.Id = cid.EstadoId " +
-                            "where CpfCliente = @CpfCliente ";
+                            "where CpfCliente = @CpfCliente order by ec.Id";
 
                 return connection.Query<EnderecoViewModel>(sql, param: new { CpfCliente = cpfCliente });
             }

@@ -18,12 +18,11 @@ namespace Application.Enderecos
                 connection = db;
             }
 
-            public IEnumerable<Cidade> Handle(int estadoId)
+            public IEnumerable<Cidade> Handle()
             {
-                string sql = $"select * from {new Cidade().GetTableName()} " +
-                            $"where EstadoId = @EstadoId";
+                string sql = $"select * from {new Cidade().GetTableName()} ";
 
-                return connection.Query<Cidade>(sql, param: new { EstadoId = estadoId });
+                return connection.Query<Cidade>(sql);
             }
         }
     }

@@ -1,0 +1,51 @@
+﻿@page
+@model Web.Pages.Endereco.IndexModel
+@{
+    ViewData["Title"] = "Endereço";
+}
+
+<h4>Novo Endereço</h4>
+
+<form method="post">
+    <div class="row">
+        <div class="col-sm-12 col-12" style="padding-top: 15px;">
+            <span class="text-danger">@Html.ValidationMessage("ValidationMessage")</span>
+            <p>
+                * Campos obrigatórios.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Command.Rua"></label>
+            <input asp-for="Command.Rua" class="form-control" />
+            <span asp-validation-for="Command.Rua" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Command.Numero"></label>
+            <input asp-for="Command.Numero" class="form-control" />
+            <span asp-validation-for="Command.Numero" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Command.Cep"></label>
+            <input asp-for="Command.Cep" class="form-control" maxlength="50" />
+            <span asp-validation-for="Command.Cep" class="text-danger"></span>
+        </div>
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Command.Complemento"></label>
+            <input asp-for="Command.Complemento" class="form-control" maxlength="255" />
+        </div>
+        <div class="col-sm-6 col-12 form-group">
+            <label asp-for="Cidades"></label>
+            <select asp-for="CidadeId" asp-items="Model.Cidades" class="form-control" />
+        </div>
+    </div>
+
+    @for (int i = 0; i < Model.Cidades.Count(); i++)
+    {
+        @Html.HiddenFor(Model => Model.Cidades.ToArray()[i].Value)
+        @Html.HiddenFor(Model => Model.Cidades.ToArray()[i].Text)
+    }
+
+    <button type="submit" class="btn btn-primary">Adicionar</button>
+</form>
