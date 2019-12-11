@@ -15,6 +15,8 @@ namespace Domain
 
         public string Codigo { get; set; }
 
+        public bool Selecionado { get; set; }
+
         public int BandeiraId { get; set; }
 
         public int TipoId { get; set; }
