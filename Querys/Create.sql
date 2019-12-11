@@ -145,6 +145,7 @@ create table Pedido (
 	,CpfEntregador  varchar(11) not null
 	,StatusId 		int 		not null
 	,EnderecoId 	int			not null
+	,
 	,foreign key(EnderecoId) 		references EnderecoCliente(Id)
 	,foreign key (CpfCliente) 		references Cliente(Cpf)
 	,foreign key (CpfEntregador) 	references Entregador(Cpf) 
@@ -161,12 +162,13 @@ create table Pedido (
  
   --Bandeira Cartao
  create table CartaoBandeira (
- 	BandeiraId	 	int 		primary key
+ 	Id	 	int generated always as identity primary key
 	,bandeira 		varchar(50) not null
  );
+
  --Tipo Cartao
  create table CartaoTipo (
- 	TipoId 		int 		primary key
+ 	Id 			int generated always as identity primary key
 	,tipo 	 	varchar(50) not null
  );
 
@@ -177,6 +179,7 @@ create table Pedido (
 	 ,NomeDoTitular varchar(100) not null
 	 ,Numero 		char(20) 	not null
 	 ,Codigo 		char(3) 	not null
+	 ,Selecionado	boolean		not null
 	 ,BandeiraId 	int			not null
 	 ,TipoId 		int 		not null
 	 ,foreign key (CpfCliente) 	references  Cliente (Cpf)
