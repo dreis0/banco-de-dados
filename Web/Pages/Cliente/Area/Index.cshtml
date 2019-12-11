@@ -78,8 +78,9 @@
                                 @Html.HiddenFor(Model => Model.PedidoAberto.ToArray()[i].ProdutoId)
                                 @Html.HiddenFor(Model => Model.PedidoAberto.ToArray()[i].PedidoId)
                                 @Html.HiddenFor(Model => Model.PedidoAberto.ToArray()[i].StatusId)
-                                <h6> @Model.PedidoAberto.ToArray()[i].NomeProduto - @Model.PedidoAberto.ToArray()[i].NomeFantasia</h6>
-                                <span> @Model.PedidoAberto.ToArray()[i].DescricaoProduto </span>
+                                @Html.HiddenFor(Model => Model.PedidoAberto.ToArray()[i].PrecoProduto)
+                                <h6>R$@Model.PedidoAberto.ToArray()[i].PrecoProduto - @Model.PedidoAberto.ToArray()[i].NomeProduto - @Model.PedidoAberto.ToArray()[i].NomeFantasia</h6>
+                                <span class="w-100"> @Model.PedidoAberto.ToArray()[i].DescricaoProduto </span>
                             </div>
                             <div class="col-2">
                                 <input asp-for="PedidoAberto.ToArray()[i].Quantidade" class="form-control" />
@@ -87,7 +88,12 @@
                         }
                     </div>
                     <div class="row">
-                        <div class="col-12" style="margin-top: 1.5rem">
+                        <div class="col-6 text-left" style="margin-top: 1.5rem">
+                            <label asp-for="PagarNoCartao">Pagamento no cartão</label>
+                            <input asp-for="PagarNoCartao" />
+                            <span asp-validation-for="PagarNoCartao" class="text-danger"></span>
+                        </div>
+                        <div class="col-6" style="margin-top: 1.5rem">
                             @if (Model.PedidoAberto.FirstOrDefault().StatusId == (int)eStatusPedido.Pendente)
                             {
                                 <button asp-page-handler="FecharPedido" class="btn btn-sm btn-primary float-right">Fechar Pedido</button>
